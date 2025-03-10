@@ -45,19 +45,19 @@ class TransformersTrainer:
     def __init__(
         self,
         train_dataset: Dataset,
-        model_wrapper: nn.Module,
+        model: nn.Module,
         model_args: ModelArguments,
         training_args: TrainingArguments,
     ):
         self.trainer = GenTrainer(
             train_dataset=train_dataset,
-            model=model_wrapper.model,
-            tokenizer=model_wrapper.tokenizer,
+            model=model,
+            tokenizer=model.tokenizer,
             args=training_args,
             data_collator=train_dataset.data_collator,
             use_lora=model_args.use_lora
         )
-        self.model_wrapper = model_wrapper
+        self.model = model
         self.training_args = training_args
 
     def train(self):

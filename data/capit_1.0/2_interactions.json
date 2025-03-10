@@ -1,0 +1,46 @@
+[
+    {
+        "dataset_name": "aclue",
+        "model_repr_id": "Qwen1.5-7B-Chat",
+        "correct_query_indices": [
+            "aclue_00000000"
+        ],
+        "incorrect_query_indices": [
+            "aclue_00000001",
+            "aclue_00000002"
+        ]
+    },
+    {
+        "dataset_name": "aclue",
+        "model_repr_id": "Yi-1.5-9B-Chat",
+        "correct_query_indices": [
+            "aclue_00000000",
+            "aclue_00000001"
+        ],
+        "incorrect_query_indices": [
+            "aclue_00000002"
+        ]
+    },
+    {
+        "dataset_name": "agieval",
+        "model_repr_id": "Qwen1.5-7B-Chat",
+        "correct_query_indices": [
+            "agieval_00000000"
+        ],
+        "incorrect_query_indices": [
+            "agieval_00000001",
+            "agieval_00000002"
+        ]
+    },
+    {
+        "dataset_name": "agieval",
+        "model_repr_id": "Yi-1.5-9B-Chat",
+        "correct_query_indices": [
+            "agieval_00000000",
+            "agieval_00000001"
+        ],
+        "incorrect_query_indices": [
+            "agieval_00000002"
+        ]
+    }
+]

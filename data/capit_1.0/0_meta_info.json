@@ -1,0 +1,31 @@
+{
+    "data_repr": {
+        "instruction": {
+            "class": "Embedding",
+            "encoder_name": "Alibaba-NLP/gte-large-en-v1.5"
+        }
+    },
+    "model_repr": {
+        "capability": {
+            "class": "Embedding",
+            "encoder_name": "Alibaba-NLP/gte-large-en-v1.5"
+        },
+        "institute": {
+            "class": "categorical",
+            "padding_idx": 0,
+            "vocab_size": 2
+        },
+        "score_1": {
+            "class": "numeric",
+            "description": "Economics, Market Dynamics, Cost Structures, Utility Theory, Production Possibilities"
+        },
+        "score_2": {
+            "class": "numeric",
+            "description": "International Law, Human Rights, Jurisdiction, Treaty Obligations, Maritime Delimitation"
+        },
+        "score_3": {
+            "class": "numeric",
+            "description": "Nutrition, Metabolism, Biochemistry, Health, Exercise"
+        }
+    }
+}

@@ -39,7 +39,7 @@ class ContrastiveRecDataset(RecDataset):
         data_repr_list.extend(negs)
         data_repr_list = [reduce(lambda x, cls_core: cls_core.apply(x), self.data_repr_encoders, i_data_repr) for i_data_repr in data_repr_list]
 
-        query = "Based on the model description and the test sample B, predict whether the model in A can handle test sample B by indicating 'Yes' or 'No'."
+        query = "Based on the model description and the test sample, predict whether the model can handle test sample by indicating 'Yes' or 'No'."
 
         model_repr_inputs = self.tokenizer(
             model_repr,

@@ -1,1 +1,1 @@
-DATA_PATH = 'your_rec_data'
+DATA_PATH = 'your_path/rec_data'

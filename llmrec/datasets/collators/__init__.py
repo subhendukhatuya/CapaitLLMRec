@@ -1,1 +1,1 @@
-from llmrec.datasets.collators.label_padding_collator import LabelPaddingCollator
+from llmrec.datasets.collators.padding_collator import PaddingCollator

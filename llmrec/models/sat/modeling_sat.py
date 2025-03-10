@@ -100,29 +100,37 @@ class ModelSAT(BaseModel):
         if training_args.gradient_checkpointing:
             self.model.enable_input_require_grads()
 
+        self.per_device_train_batch_size = training_args.per_device_train_batch_size
+
     def gradient_checkpointing_enable(self, **kwargs):
         self.model.gradient_checkpointing_enable(**kwargs)
 
-    def encode(self, features):
-        if features is None:
+    def encode(self, input_ids, attention_mask, position_ids, labels):
+        if input_ids is None:
             return None
-        outputs = self.model(input_ids=features['input_ids'],
-                             attention_mask=features['attention_mask'],
-                             position_ids=features['position_ids'] if 'position_ids' in features.keys() else None,
+        outputs = self.model(input_ids=input_ids,
+                             attention_mask=attention_mask,
+                             position_ids=position_ids,
                              output_hidden_states=True)
-        _, max_indices = torch.max(features['labels'], dim=1)
+        _, max_indices = torch.max(labels, dim=1)
         predict_indices = max_indices - 1
         logits = [outputs.logits[i, predict_indices[i], :] for i in range(outputs.logits.shape[0])]
         logits = torch.stack(logits, dim=0)
         scores = logits[:, self.yes_loc]
         return scores.contiguous()
 
-    def forward(self, pair: Union[Dict[str, Tensor], List[Dict[str, Tensor]]]):
-        logits = self.encode(pair)
+    def forward(
+        self,
+        input_ids: torch.LongTensor = None,
+        attention_mask: Optional[torch.Tensor] = None,
+        position_ids: Optional[torch.LongTensor] = None,
+        labels: Optional[torch.LongTensor] = None
+    ):
+        logits = self.encode(input_ids, attention_mask, position_ids, labels)
 
         if self.training:
-            grouped_logits = logits.view(self.train_batch_size, -1)
-            target = torch.zeros(self.train_batch_size, device=grouped_logits.device, dtype=torch.long)
+            grouped_logits = logits.view(self.per_device_train_batch_size, -1)
+            target = torch.zeros(self.per_device_train_batch_size, device=grouped_logits.device, dtype=torch.long)
             loss = self.compute_loss(grouped_logits, target)
         else:
             loss = None

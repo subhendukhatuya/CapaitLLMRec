@@ -8,6 +8,10 @@ class ModelArguments:
     model_name: str = field(
         metadata={"help": "Path or identifier for a pretrained model from huggingface.co/models."}
     )
+    data_and_model_repr_config_url: str = field(
+        default='0_meta_info.json',
+        metadata={"help": "URL or file path for data & model repr config file (meta_info)."}
+    )
     rec_model_class: str = field(
         default='ModelSAT',
         metadata={"help": "Class of recommendation model."}
@@ -78,13 +82,29 @@ class DataArguments:
         default='ContrastiveRecDataset',
         metadata={"help": "Class of the recommendation training data."}
     )
+    model_repr_data_url: str = field(
+        default='1_model_reprs.json',
+        metadata={"help": "URL or file path for model representation file."}
+    )
+    data_and_model_interaction_url: str = field(
+        default='2_interactions.json',
+        metadata={"help": "URL or file path for data & model interaction file."}
+    )
     data_collator_class: Optional[str] = field(
         default=None,
         metadata={"help": "Class for data collation during training."}
     )
     contrastive_train_group_size: Optional[int] = field(
         default=8,
-        metadata={"help": "Number of samples per group for contrastive learning."}
+        metadata={"help": "Number of samples per group for contrastive setting."}
+    )
+    contrastive_num_sample: Optional[int] = field(
+        default=10000,
+        metadata={"help": "Number of training data."}
+    )
+    contrastive_num_pos: Optional[int] = field(
+        default=1,
+        metadata={"help": "Number of positive samples per group."}
     )
     model_repr_max_length: Optional[int] = field(
         default=256,

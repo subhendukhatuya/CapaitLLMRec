@@ -5,9 +5,9 @@ from transformers import DataCollatorForSeq2Seq
 
 
 @dataclass
-class LabelPaddingCollator(DataCollatorForSeq2Seq):
+class PaddingCollator(DataCollatorForSeq2Seq):
     def __init__(self, *args, model_repr_max_length: int, data_repr_max_length: int, **kwargs):
-        super(LabelPaddingCollator, self).__init__(*args, pad_to_multiple_of=8, return_tensors="pt", padding=True, **kwargs)
+        super(PaddingCollator, self).__init__(*args, pad_to_multiple_of=8, return_tensors="pt", padding=True, **kwargs)
         self.model_repr_max_length = model_repr_max_length
         self.data_repr_max_length = data_repr_max_length
 

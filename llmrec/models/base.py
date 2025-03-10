@@ -1,7 +1,9 @@
 import importlib
 import torch.nn as nn
 from transformers.utils.quantization_config import QuantizationMethod
+
 from llmrec.arguments import ModelArguments, TrainingArguments
+from llmrec.utils import load_json
 
 class BaseModel(nn.Module):
     def __init__(self,
@@ -11,10 +13,12 @@ class BaseModel(nn.Module):
         super(BaseModel, self).__init__()
         self.model_args = model_args
         self.training_args = training_args
-        self._init_data_repr_encoders()
-        self._init_model_repr_encoders()
 
-    def _init_data_repr_encoders(self):
+        # repr_meta_info = load_json(model_args.data_and_model_repr_config_url)
+        self._init_data_repr_encoders(None)
+        self._init_model_repr_encoders(None)
+
+    def _init_data_repr_encoders(self, data_repr_meta_info):
         self.data_repr_encoders = []
         if self.model_args.data_repr_encoders is not None:
             self.data_repr_encoders = [
@@ -24,7 +28,7 @@ class BaseModel(nn.Module):
                 ) for data_repr_encoder_class in self.model_args.data_repr_encoders.split(',')
             ]
 
-    def _init_model_repr_encoders(self):
+    def _init_model_repr_encoders(self, model_repr_meta_info):
         self.model_repr_encoders = []
         if self.model_args.model_repr_encoders is not None:
             self.model_repr_encoders = [
@@ -56,3 +60,4 @@ class BaseModel(nn.Module):
         if hasattr(self, 'tokenizer'):
             return self.tokenizer
         return None
+
