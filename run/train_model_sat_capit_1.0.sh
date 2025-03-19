@@ -6,7 +6,7 @@ echo $SAVE_DIR
 deepspeed --include localhost:0,1 --master_port 2305 main.py \
     --deepspeed scripts/zero2.json \
     --output_dir $SAVE_DIR \
-    --model_name your_path/models/Phi-3.5-mini-instruct \
+    --model_name microsoft/Phi-3.5-mini-instruct \
     --rec_model_class ModelSAT \
     --rec_training_dataset_class ContrastiveRecDataset \
     --rec_trainer_class TransformersTrainer \
@@ -17,7 +17,7 @@ deepspeed --include localhost:0,1 --master_port 2305 main.py \
     --model_repr_max_length 512 \
     --data_repr_max_length 256 \
     --learning_rate 1e-5 \
-    --num_train_epochs 1 \
+    --num_train_epochs 10 \
     --per_device_train_batch_size 1 \
     --gradient_accumulation_steps 2 \
     --dataloader_drop_last True \
@@ -28,6 +28,6 @@ deepspeed --include localhost:0,1 --master_port 2305 main.py \
     --gradient_checkpointing False \
     --warmup_ratio 0.1 \
     --bf16 \
-    --use_lora False \
+    --use_lora True \
     --use_flash_attn False \
-    --report_to wandb
+    --report_to none
